@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>EditOder</title>
+</head>
+<body>
+<h3>Edit Oder</h3>
+<p>
+    <a th:href="@{/oders}">
+        Back to oder list
+    </a>
+</p>
+<div id="form">
+    <form th:action="@{/oders/update}" th:object="${oderProduct}"
+          method="POST" novalidate="novalidate">
+        <input type="hidden" id="id" th:field="*{product.id}"/>
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label for="fistname">Loại sản phẩm</label>
+            <input type="text" id="fistname" th:field="*{product.productType.name}"/>
+        </div>
+        <div>
+            <label for="lastname">Sản phẩm</label>
+            <input type="text" id="lastname" th:field="*{product.name}"/>
+        </div>
+        <div>
+            <label for="dob">Ngày mua</label>
+            <input type="date" id="dob" th:field="*{dateOder}"/>
+        </div>
+        <div>
+            <label for="address">Số lượng</label>
+            <input type="text" id="address" th:field="*{quantity}"/>
+        </div>
+
+        <input type="submit" value="Save"/>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

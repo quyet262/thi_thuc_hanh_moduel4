@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="/layout :: head">
+    <title>List Oder</title>
+</head>
+<body>
+<h3>Oder List</h3>
+<p>
+    <a th:href="@{/oders/create}">
+        Add new oder
+    </a>
+</p>
+<p>
+    <a th:href="@{/classes}">
+        Classes
+    </a>
+</p>
+<div style="margin-bottom: 10px; margin-left: 110px">
+    <form th:action="@{/oders}" method="get">
+        <label><input type="date" name="starDate" th:value="${starDate}" placeholder="Ngày bắt đầu"></label>
+        <label><input type="date" name="endDate" th:value="${endDate}" placeholder="Ngày kết thúc"></label>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+
+<table id = "oders">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Mã đơn hàng</th>
+        <th>Tên sản phẩm</th>
+        <th>Giá(USD)</th>
+        <th>loại sản phẩm</th>
+        <th>Ngày mua</th>
+        <th>Số lượng</th>
+        <th>Tổng tiền</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="o,oStatus : ${oderProducts}">
+        <td th:text="${oStatus.count}"></td>
+        <td th:text="${o.id}"></td>
+        <td th:text="${o.product.name}"></td>
+        <td th:text="${o.product.price}"></td>
+        <td th:text="${o.product.productType.name}"></td>
+        <td th:text="${o.dateOder}"></td>
+        <td th:text="${o.quantity}"></td>
+        <td th:text="${(o.quantity)*(o.product.price)}"></td>
+        <td><a th:href="@{/oders/{id}/edit(id=${o.getId()})}">edit</a></td>
+        <td><a th:href="@{/oders/{id}/delete(id=${o.getId()})}">delete</a></td>
+        <td><a th:href="@{/oders/{id}/view(id=${o.getId()})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-primary" th:if="${oderProducts.hasPrevious()}"
+       th:href="@{/oders(page=${oderProducts.number - 1})}">Previous</a>
+    <span th:text="${oderProducts.number + 1}"></span> | <span th:text="${oderProducts.totalPages}"></span>
+    <a class="btn btn-primary" th:if="${oderProducts.hasNext()}"
+       th:href="@{/oders(page=${oderProducts.number + 1})}">Next</a>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
